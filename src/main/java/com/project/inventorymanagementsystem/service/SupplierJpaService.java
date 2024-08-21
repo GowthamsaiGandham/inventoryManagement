@@ -6,12 +6,14 @@ import com.project.inventorymanagementsystem.repository.SupplierJpaRepository;
 import com.project.inventorymanagementsystem.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class SupplierJpaService implements SupplierRepository {
@@ -63,14 +65,15 @@ public class SupplierJpaService implements SupplierRepository {
         }
     }
 
-    public void deleteSupplier(int supplierId) {
-        try{
-            getSupplierById(supplierId);
+    public ResponseEntity<String> deleteSupplier(int supplierId) {
+        Optional<Supplier> existingSupplier = supplierJpaRepository.findById(supplierId);
+
+        if (existingSupplier.isPresent()) {
             supplierJpaRepository.deleteById(supplierId);
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
-        }
-        catch(NoSuchElementException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Supplier Not Found");
+            return new ResponseEntity<>("Supplier successfully deleted", HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>("Supplier not found", HttpStatus.NOT_FOUND);
         }
     }
+
 }

@@ -2,6 +2,7 @@ package com.project.inventorymanagementsystem.repository;
 
 
 import com.project.inventorymanagementsystem.model.Supplier;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 
@@ -14,5 +15,5 @@ public interface SupplierRepository {
 
     Supplier updateSupplier(int supplierId, Supplier updateDetails);
 
-    void deleteSupplier(int supplierId);
+    ResponseEntity<String> deleteSupplier(int supplierId);
 }

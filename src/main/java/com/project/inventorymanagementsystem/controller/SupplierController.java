@@ -4,6 +4,7 @@ import com.project.inventorymanagementsystem.model.Supplier;
 import com.project.inventorymanagementsystem.repository.SupplierJpaRepository;
 import com.project.inventorymanagementsystem.service.SupplierJpaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class SupplierController {
     }
 
     @DeleteMapping("/suppliers/{supplierId}")
-    public void deleteSupplier(@PathVariable("supplierId") int supplierId){
-        supplierJpaService.deleteSupplier(supplierId);
+    public ResponseEntity<String> deleteSupplier(@PathVariable int supplierId) {
+        return supplierJpaService.deleteSupplier(supplierId);
     }
 }
